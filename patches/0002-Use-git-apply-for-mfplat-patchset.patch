@@ -1,0 +1,37 @@
+From 95bb238fa6d6d6b2fd1c7405c4f519e981e4041f Mon Sep 17 00:00:00 2001
+From: gasinvein <gasinvein@gmail.com>
+Date: Sun, 22 Mar 2020 17:45:38 +0300
+Subject: [PATCH 2/2] Use git apply for mfplat patchset This way test.mp4 can
+ be created via patch instead of copying it manually
+
+---
+ game-patches-testing/protonprep.sh | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
+
+diff --git a/game-patches-testing/protonprep.sh b/game-patches-testing/protonprep.sh
+index 06a3c73..34d8a2e 100755
+--- a/game-patches-testing/protonprep.sh
++++ b/game-patches-testing/protonprep.sh
+@@ -32,10 +32,6 @@
+     # revert this fuckery because for some reason it causes controller axis to spin.
+     patch -Np1 -R < ../game-patches-testing/wine-patches/winebus.sys-Fix-reporting-axis-values-for-joysticks.patch
+ 
+-    # needed for mfplat alpha patches
+-    cp ../game-patches-testing/wine-patches/test.mp4 dlls/mfplat/tests/
+-    cp ../game-patches-testing/wine-patches/test.mp4 dlls/mfreadwrite/tests/
+-
+     echo "plasma systray fix"
+     patch -Np1 < ../game-patches-testing/wine-patches/plasma_systray_fix.patch
+ 
+@@ -170,7 +166,7 @@
+     patch -Np1 < ../game-patches-testing/proton-valve-patches/proton-Set_amd_ags_x64_to_built_in_for_Wolfenstein_2.patch
+ 
+     echo "mfplat alpha testing patches"
+-    patch -Np1 < ../game-patches-testing/wine-patches/mfplat_rebase_patchset.patch
++    git apply ../game-patches-testing/wine-patches/mfplat_rebase_patchset.patch
+ 
+     echo "fs hack improvement PRs"
+     patch -Np1 < ../game-patches-testing/wine-patches/winevulkan_fshack_opts.patch
+-- 
+2.25.1
+

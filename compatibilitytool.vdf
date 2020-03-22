@@ -2,9 +2,9 @@
 {
   "compat_tools"
   {
-    "proton_flatpak"
+    "proton_ge_flatpak"
     {
-      "display_name" "Proton @VERSION@ (flatpak @BUILD@)"
+      "display_name" "Proton-GE @VERSION@ (flatpak @BUILD@)"
       "from_oslist"  "windows"
       "to_oslist"    "linux"
       "install_path" "."

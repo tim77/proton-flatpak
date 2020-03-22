@@ -19,7 +19,7 @@ jobs:
 
     - name: Download flatpak SDK and sources
       env:
-        FLATPAK_ID: com.valvesoftware.Steam.CompatibilityTool.Proton
+        FLATPAK_ID: com.valvesoftware.Steam.CompatibilityTool.Proton-GE
       run: |
         set -e
         flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
@@ -28,7 +28,7 @@ jobs:
 
     - name: Build flatpak
       env:
-        FLATPAK_ID: com.valvesoftware.Steam.CompatibilityTool.Proton
+        FLATPAK_ID: com.valvesoftware.Steam.CompatibilityTool.Proton-GE
       run: |
         set -e
         ostree --repo=build-repo init --mode=bare-user
@@ -36,12 +36,12 @@ jobs:
 
     - name: Create flatpak bundle
       env:
-        FLATPAK_ID: com.valvesoftware.Steam.CompatibilityTool.Proton
+        FLATPAK_ID: com.valvesoftware.Steam.CompatibilityTool.Proton-GE
       run: |
-        flatpak build-bundle --runtime-repo=https://flathub.org/repo/flathub.flatpakrepo --runtime build-repo Proton.flatpak ${FLATPAK_ID} stable
+        flatpak build-bundle --runtime-repo=https://flathub.org/repo/flathub.flatpakrepo --runtime build-repo Proton-GE.flatpak ${FLATPAK_ID} stable
 
     - name: Upload bundle
       uses: actions/upload-artifact@v1
       with:
-        name: proton-flatpak-bundle
-        path: Proton.flatpak
+        name: proton-ge-flatpak-bundle
+        path: Proton-GE.flatpak

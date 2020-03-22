@@ -1,8 +1,8 @@
 diff --git a/proton b/proton
-index 22b5112..9062425 100755
+index 051622f..931d095 100755
 --- a/proton
 +++ b/proton
-@@ -94,50 +94,20 @@ def set_dir_casefold_bit(dir_path):
+@@ -92,50 +92,20 @@ def set_dir_casefold_bit(dir_path):
  class Proton:
      def __init__(self, base_dir):
          self.base_dir = base_dir + "/"
@@ -59,7 +59,19 @@ index 22b5112..9062425 100755
  class CompatData:
      def __init__(self, compatdata):
          self.base_dir = compatdata + "/"
-@@ -713,16 +683,12 @@ if __name__ == "__main__":
+@@ -506,7 +476,10 @@ class Session:
+         if "nod3d9" in self.compat_config:
+             self.dlloverrides["d3d9"] = ""
+ 
+-        import protonfixes
++        try:
++            import protonfixes
++        except ModuleNotFoundError as e:
++            log(e.msg)
+ 
+         s = ""
+         for dll in self.dlloverrides:
+@@ -645,16 +618,12 @@ if __name__ == "__main__":
  
      g_proton = Proton(os.path.dirname(sys.argv[0]))
  
@@ -75,4 +87,4 @@ index 22b5112..9062425 100755
 -
      g_session.init_session()
  
-     if sys.version_info[0] == 2:
+     #determine mode
