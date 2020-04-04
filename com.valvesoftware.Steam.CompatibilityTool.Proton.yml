@@ -15,6 +15,9 @@ build-options:
   prefix: /app/share/steam/compatibilitytools.d/Proton-GE
   append-path: /usr/lib/sdk/mingw-w64/bin:/app/share/steam/compatibilitytools.d/Proton-GE/bin
   strip: true
+  env:
+    C_INCLUDE_PATH: /app/share/steam/compatibilitytools.d/Proton/include:/app/include
+    CPLUS_INCLUDE_PATH: /app/share/steam/compatibilitytools.d/Proton/include:/app/include
   cflags: &optflags -march=nocona -mtune=core-avx2 -mfpmath=sse
   cxxflags: *optflags
 
@@ -74,6 +77,18 @@ cleanup:
   - /lib32/wine/*.def
 modules:
 
+  - name: Vulkan-Headers
+    subdir: Vulkan-Headers
+    buildsystem: cmake-ninja
+    sources: 
+      - *proton_source
+
+  - name: SPIRV-Headers
+    subdir: SPIRV-Headers
+    buildsystem: cmake-ninja
+    sources: 
+      - *proton_source
+
   - name: wine-widl
     subdir: wine
     build-options:
@@ -109,6 +124,8 @@ modules:
     subdir: wine
     build-options:
       prepend-pkg-config-path: /app/share/steam/compatibilitytools.d/Proton-GE/lib/pkgconfig
+      env:
+        LD_RUN_PATH: /app/share/steam/compatibilitytools.d/Proton-GE/lib
       arch:
         x86_64:
           config-opts:
@@ -135,6 +152,8 @@ modules:
       - x86_64
     build-options:
       prepend-pkg-config-path: /app/share/steam/compatibilitytools.d/Proton-GE/lib32/pkgconfig
+      env:
+        LD_RUN_PATH: /app/share/steam/compatibilitytools.d/Proton-GE/lib32
       arch:
         x86_64: *compat_i386_opts
       config-opts:
