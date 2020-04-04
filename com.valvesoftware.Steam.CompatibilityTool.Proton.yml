@@ -42,7 +42,7 @@ x-ge-flatpak-fixes: &ge_flatpak_fixes
     - patches/0001-Use-reverse-patch-instead-of-git-revert.patch
     - patches/0002-Use-git-apply-for-mfplat-patchset.patch
 
-x-ge-patches-source: &ge_patches_source
+x-ge-apply: &ge_apply
   type: shell
   commands:
     - bash -e -x ./game-patches-testing/protonprep.sh
@@ -50,7 +50,7 @@ x-ge-patches-source: &ge_patches_source
 x-proton-ge-sources: &proton_ge_sources
   - *proton_source
   - *ge_flatpak_fixes
-  - *ge_patches_source
+  - *ge_apply
 
 cleanup:
   - "*.a"
@@ -195,7 +195,7 @@ modules:
     sources: &lsteamclient_sources
       - *proton_source
       - *ge_flatpak_fixes
-      - *ge_patches_source
+      - *ge_apply
       - type: file
         path: winemaker-configure.sh
         dest: lsteamclient
@@ -265,7 +265,7 @@ modules:
     sources:
       - *proton_source
       - *ge_flatpak_fixes
-      - *ge_patches_source
+      - *ge_apply
       - type: file
         path: winemaker-configure.sh
         dest: steam_helper
@@ -308,7 +308,7 @@ modules:
     sources: &vrclient_sources
       - *proton_source
       - *ge_flatpak_fixes
-      - *ge_patches_source
+      - *ge_apply
       - type: file
         path: winemaker-configure.sh
         dest: vrclient_x64/vrclient_x64
@@ -371,7 +371,7 @@ modules:
     sources: &dxvk_sources
       - *proton_source
       - *ge_flatpak_fixes
-      - *ge_patches_source
+      - *ge_apply
       - type: file
         dest: dxvk
         path: dxvk-ccache-win32.txt
@@ -467,7 +467,7 @@ modules:
     sources:
       - *proton_source
       - *ge_flatpak_fixes
-      - *ge_patches_source
+      - *ge_apply
       - type: patch
         path: proton_flatpak.patch
       - type: file
