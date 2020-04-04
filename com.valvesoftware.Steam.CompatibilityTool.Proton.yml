@@ -34,13 +34,13 @@ x-compat-i386-opts: &compat_i386_opts
 x-proton-source: &proton_source
   type: git
   url: "https://github.com/GloriousEggroll/proton-ge-custom.git"
-  tag: 5.4-GE-2
+  tag: 5.4-GE-3
 
 x-ge-flatpak-fixes: &ge_flatpak_fixes
-  type: patch
-  paths:
-    - patches/0001-Use-reverse-patch-instead-of-git-revert.patch
-    - patches/0002-Use-git-apply-for-mfplat-patchset.patch
+  type: shell
+  commands:
+    # We already have clean checkouts
+    - sed '/git clean -xdf/d' -i game-patches-testing/protonprep.sh
 
 x-ge-apply: &ge_apply
   type: shell
@@ -49,6 +49,11 @@ x-ge-apply: &ge_apply
 
 x-proton-ge-sources: &proton_ge_sources
   - *proton_source
+  - type: file
+    dest: wine/dlls/winevulkan
+    dest-filename: vk-1.1.130.xml
+    url: "https://github.com/KhronosGroup/Vulkan-Docs/raw/v1.1.130/xml/vk.xml"
+    sha256: 4bc7a87237766a76608b9490dd4b6e6a4f2b40b1a0988198cdaf46dee2989d6e
   - *ge_flatpak_fixes
   - *ge_apply
 
