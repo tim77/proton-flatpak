@@ -47,13 +47,16 @@ x-ge-apply: &ge_apply
   commands:
     - bash -e -x ./game-patches-testing/protonprep.sh
 
+x-vulkan-xml: &vulkan_xml
+  type: file
+  dest: wine/dlls/winevulkan
+  dest-filename: vk-1.1.130.xml
+  url: "https://github.com/KhronosGroup/Vulkan-Docs/raw/v1.1.130/xml/vk.xml"
+  sha256: 4bc7a87237766a76608b9490dd4b6e6a4f2b40b1a0988198cdaf46dee2989d6e
+
 x-proton-ge-sources: &proton_ge_sources
   - *proton_source
-  - type: file
-    dest: wine/dlls/winevulkan
-    dest-filename: vk-1.1.130.xml
-    url: "https://github.com/KhronosGroup/Vulkan-Docs/raw/v1.1.130/xml/vk.xml"
-    sha256: 4bc7a87237766a76608b9490dd4b6e6a4f2b40b1a0988198cdaf46dee2989d6e
+  - *vulkan_xml
   - *ge_flatpak_fixes
   - *ge_apply
 
@@ -199,6 +202,7 @@ modules:
       - install -Dm755 lsteamclient.dll.so -t ${FLATPAK_DEST}/lib/wine/
     sources: &lsteamclient_sources
       - *proton_source
+      - *vulkan_xml
       - *ge_flatpak_fixes
       - *ge_apply
       - type: file
@@ -269,6 +273,7 @@ modules:
       - install -Dm755 steam_helper.exe.so ${FLATPAK_DEST}/lib32/wine/steam.exe.so
     sources:
       - *proton_source
+      - *vulkan_xml
       - *ge_flatpak_fixes
       - *ge_apply
       - type: file
@@ -312,6 +317,7 @@ modules:
       - install -Dm755 vrclient_x64.dll.fake ${FLATPAK_DEST}/lib/wine/fakedlls/vrclient_x64.dll
     sources: &vrclient_sources
       - *proton_source
+      - *vulkan_xml
       - *ge_flatpak_fixes
       - *ge_apply
       - type: file
@@ -375,6 +381,7 @@ modules:
       - ln -s version ${FLATPAK_DEST}/lib/wine/dxvk/d9vk_version
     sources: &dxvk_sources
       - *proton_source
+      - *vulkan_xml
       - *ge_flatpak_fixes
       - *ge_apply
       - type: file
@@ -471,6 +478,7 @@ modules:
       - appstream-compose --basename=${FLATPAK_ID} --prefix=${FLATPAK_DEST} --origin=flatpak ${FLATPAK_ID}
     sources:
       - *proton_source
+      - *vulkan_xml
       - *ge_flatpak_fixes
       - *ge_apply
       - type: patch
