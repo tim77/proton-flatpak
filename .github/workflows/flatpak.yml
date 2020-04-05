@@ -35,7 +35,7 @@ jobs:
       uses: actions/cache@v1
       with:
         path: .flatpak-builder/ccache
-        key: flatpak-builder-ccache
+        key: flatpak-builder-ccache-ge
 
     - name: Build flatpak
       run: |
