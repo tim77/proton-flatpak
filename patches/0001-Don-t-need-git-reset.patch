@@ -1,0 +1,39 @@
+From d7cff0369667036221764bcc3e62a8361f83a5bc Mon Sep 17 00:00:00 2001
+From: gasinvein <gasinvein@gmail.com>
+Date: Sun, 5 Apr 2020 23:04:37 +0300
+Subject: [PATCH 1/2] Don't need git reset
+
+---
+ patches/protonprep.sh | 6 ------
+ 1 file changed, 6 deletions(-)
+
+diff --git a/patches/protonprep.sh b/patches/protonprep.sh
+index 43a8dce..27c1d67 100755
+--- a/patches/protonprep.sh
++++ b/patches/protonprep.sh
+@@ -46,22 +46,16 @@
+ 
+     # VKD3D patches
+     cd vkd3d
+-    git reset --hard HEAD
+-    git clean -xdf
+     cd ..
+ 
+     # Valve DXVK patches
+     cd dxvk
+-    git reset --hard HEAD
+-    git clean -xdf
+     patch -Np1 < ../patches/dxvk/valve-dxvk-avoid-spamming-log-with-requests-for-IWineD3D11Texture2D.patch
+     patch -Np1 < ../patches/dxvk/proton-add_new_dxvk_config_library.patch
+     cd ..
+ 
+     #WINE
+     cd wine
+-    git reset --hard HEAD
+-    git clean -xdf
+ 
+ # warframe launcher fix 1
+     git revert --no-commit bae4776c571cf975be1689594f4caf93ad23e0ca
+-- 
+2.25.1
+
