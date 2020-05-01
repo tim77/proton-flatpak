@@ -34,7 +34,7 @@ x-compat-i386-opts: &compat_i386_opts
 x-proton-source: &proton_source
   type: git
   url: "https://github.com/GloriousEggroll/proton-ge-custom.git"
-  tag: 5.5-GE-1
+  tag: 5.6-GE-2
 
 x-ge-flatpak-fixes: &ge_flatpak_fixes
   type: patch
@@ -196,6 +196,7 @@ modules:
       - -DSTEAM_API_EXPORTS
       - -Dprivate=public
       - -Dprotected=public
+      - -ldl
       - --dll
       - .
     no-make-install: true
@@ -308,6 +309,7 @@ modules:
       - -I${FLATPAK_DEST}/include/wine/windows
       - -I.
       - -I..
+      - -ldl
       - --dll
       - .
     build-commands:

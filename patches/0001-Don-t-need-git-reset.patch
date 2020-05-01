@@ -1,17 +1,26 @@
-From d7cff0369667036221764bcc3e62a8361f83a5bc Mon Sep 17 00:00:00 2001
+From 524981553183e08b8a288ad5c407612d03ccf5c3 Mon Sep 17 00:00:00 2001
 From: gasinvein <gasinvein@gmail.com>
-Date: Sun, 5 Apr 2020 23:04:37 +0300
+Date: Sun, 19 Apr 2020 14:32:01 +0300
 Subject: [PATCH 1/2] Don't need git reset
 
 ---
- patches/protonprep.sh | 6 ------
- 1 file changed, 6 deletions(-)
+ patches/protonprep.sh | 10 ----------
+ 1 file changed, 10 deletions(-)
 
 diff --git a/patches/protonprep.sh b/patches/protonprep.sh
-index 43a8dce..27c1d67 100755
+index 85b0864..e0bdfcf 100755
 --- a/patches/protonprep.sh
 +++ b/patches/protonprep.sh
-@@ -46,22 +46,16 @@
+@@ -27,8 +27,6 @@
+ #1417 dxvk_config
+ 
+     cd gst-plugins-ugly
+-    git reset --hard HEAD
+-    git clean -xdf
+     echo "add Guy's patch to fix wmv playback in gst-plugins-ugly"
+     patch -Np1 < ../patches/gstreamer/asfdemux-always_re-initialize_metadata_and_global_metadata.patch
+     cd ..
+@@ -53,29 +51,21 @@
  
      # VKD3D patches
      cd vkd3d
@@ -27,13 +36,20 @@ index 43a8dce..27c1d67 100755
      patch -Np1 < ../patches/dxvk/proton-add_new_dxvk_config_library.patch
      cd ..
  
+     #WINE STAGING
+     cd wine-staging
+-    git reset --hard HEAD
+-    git clean -xdf
+     patch -Np1 < ../patches/wine-hotfixes/staging-44d1a45-localreverts.patch
+     cd ..
+ 
      #WINE
      cd wine
 -    git reset --hard HEAD
 -    git clean -xdf
  
- # warframe launcher fix 1
-     git revert --no-commit bae4776c571cf975be1689594f4caf93ad23e0ca
+     # winepath was broken with this commit
+     git revert --no-commit e22bcac706be3afac67f4faac3aca79fd67c3d6f
 -- 
-2.25.1
+2.25.3
 
